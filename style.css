@@ -184,3 +184,111 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Pause menu ---- */
+.pause-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: #13131f;
+  border: 1px solid #2a2a3a;
+  border-radius: 8px;
+  padding: 28px 36px;
+  min-width: 220px;
+}
+
+.pause-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #7aa2f7;
+  margin-bottom: 4px;
+}
+
+#resume-btn,
+#pause-restart-btn,
+#controls-btn {
+  width: 100%;
+  background: #1e1e2e;
+  color: #e0e0e0;
+  border: 1px solid #3a3a5a;
+  border-radius: 6px;
+  padding: 9px 0;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+#resume-btn {
+  background: #7aa2f7;
+  color: #0f0f17;
+  border-color: #7aa2f7;
+}
+
+#resume-btn:hover {
+  background: #9bbdff;
+  border-color: #9bbdff;
+}
+
+#pause-restart-btn:hover,
+#controls-btn:hover {
+  background: #2a2a3e;
+  border-color: #7aa2f7;
+}
+
+.pause-controls-list {
+  list-style: none;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-top: 1px solid #2a2a3a;
+  padding-top: 10px;
+}
+
+.pause-controls-list.hidden {
+  display: none;
+}
+
+.pause-controls-list li {
+  font-size: 12px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.level-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #555570;
+  font-weight: 600;
+  width: 100%;
+  border-top: 1px solid #2a2a3a;
+  padding-top: 10px;
+}
+
+#start-level {
+  background: #1e1e2e;
+  color: #7aa2f7;
+  border: 1px solid #3a3a5a;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 80px;
+  text-align: center;
+}
+
+#start-level:focus {
+  outline: none;
+  border-color: #7aa2f7;
+}
