@@ -1,0 +1,77 @@
+name: Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Analyze and triage issue with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          direct_prompt: |
+            You are an issue triage assistant for this Tetris game project (vanilla JS, no dependencies, no build step).
+            The codebase has three files: game.js (~305 lines of all game logic), index.html (DOM + canvas structure), style.css (dark/retro styling).
+
+            Analyze GitHub issue #${{ github.event.issue.number }} and complete the following steps:
+
+            ---
+            STEP 1 — Read the issue
+            Run: gh issue view ${{ github.event.issue.number }}
+
+            ---
+            STEP 2 — Ensure required labels exist
+            Run `gh label list` and create any missing labels from this set:
+
+            | Name              | Color   | Description                                    |
+            |-------------------|---------|------------------------------------------------|
+            | bug               | #d73a4a | Something isn't working correctly              |
+            | enhancement       | #a2eeef | New feature or improvement request             |
+            | question          | #d876e3 | Further information is requested               |
+            | documentation     | #0075ca | Improvements or additions to docs              |
+            | performance       | #e4e669 | Related to game speed or memory usage          |
+            | ui/ux             | #fef2c0 | Visual appearance or game feel                 |
+            | gameplay          | #bfd4f2 | Game mechanics, scoring, or piece behavior     |
+            | good first issue  | #7057ff | Well-scoped task suitable for newcomers        |
+            | invalid           | #e4e669 | Does not seem right or is out of scope         |
+
+            Create missing labels with:
+            gh label create "NAME" --color "HEX" --description "DESC"
+
+            ---
+            STEP 3 — Apply labels
+            Determine which labels fit this issue (choose 1-3) and add them:
+            gh issue edit ${{ github.event.issue.number }} --add-label "label1,label2"
+
+            ---
+            STEP 4 — Post a diagnosis comment
+            Post a comment in the same language as the issue using:
+            gh issue comment ${{ github.event.issue.number }} --body "BODY"
+
+            The comment body must follow this exact structure (use Markdown):
+
+            ## 🔍 Diagnóstico automático
+
+            **Resumen:** [1-2 sentences describing the nature of the request or root cause of the bug]
+
+            **Área del código afectada:**
+            - File(s): [game.js / index.html / style.css — whichever apply]
+            - Relevant section: [e.g., "lockPiece() and line-clear logic around line 180", or "COLORS constant at the top of game.js"]
+
+            **Complejidad estimada:** [Low / Medium / High] — [one-line justification]
+
+            **Próximo paso sugerido:** [Concrete actionable step: what to investigate, change, or implement first]
+
+            ---
+            *Este diagnóstico fue generado automáticamente por Claude. Puede contener inexactitudes.*
