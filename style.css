@@ -17,6 +17,40 @@ body {
 
 .wrapper {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+@keyframes rainbow-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes title-glow {
+  0%, 100% { text-shadow: 0 0 8px #f72585, 0 0 20px #f72585, 0 0 40px #f72585; }
+  25%       { text-shadow: 0 0 8px #7209b7, 0 0 20px #7209b7, 0 0 40px #7209b7; }
+  50%       { text-shadow: 0 0 8px #4cc9f0, 0 0 20px #4cc9f0, 0 0 40px #4cc9f0; }
+  75%       { text-shadow: 0 0 8px #f4d03f, 0 0 20px #f4d03f, 0 0 40px #f4d03f; }
+}
+
+.game-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 42px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  background: linear-gradient(
+    90deg,
+    #f72585, #7209b7, #3a86ff, #4cc9f0, #06d6a0, #f4d03f, #f72585
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: rainbow-shift 3s ease infinite, title-glow 3s ease infinite;
+  user-select: none;
 }
 
 .game-container {
